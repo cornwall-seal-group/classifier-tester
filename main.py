@@ -32,8 +32,9 @@ def test_images_against_classifier():
             print image_name
             print image_path
             print predictions
+
+            save_json_file(subdir, image_name, predictions)
             exit(1)
-            #save_json_file(subdir, image_name, predictions)
 
 
 def save_json_file(path, image, json):
