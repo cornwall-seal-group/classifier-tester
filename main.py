@@ -30,16 +30,19 @@ def test_images_against_classifier():
             image_path = os.path.join(subdir, file)
             predictions = find_seal(image_path)
             print image_name
-            print image_path
+            print subdir
             print predictions
 
             save_json_file(subdir, image_name, predictions)
             exit(1)
 
 
-def save_json_file(path, image, json):
+def save_json_file(path, image, predictions):
+    json_data = {
+        data: predictions
+    }
     with open(path + image + '.json', 'w') as fp:
-        json.dump(json, fp)
+        json.dump(json_data, fp)
 
 
 if __name__ == '__main__':
