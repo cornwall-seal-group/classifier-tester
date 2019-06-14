@@ -38,7 +38,7 @@ def test_images_against_classifier():
 
 def save_json_file(path, image, predictions):
     json_data = {
-        data: predictions
+        'data': predictions
     }
     with open(path + image + '.json', 'w') as fp:
         json.dump(json_data, fp)
