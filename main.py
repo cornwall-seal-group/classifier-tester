@@ -29,6 +29,7 @@ def test_images_against_classifier():
             image_name = file.replace('.jpg', '')
             image_path = os.path.join(subdir, file)
             print image_name
+            print file
             print image_path
             exit(1)
 
