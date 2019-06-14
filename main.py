@@ -27,7 +27,7 @@ def test_images_against_classifier():
 
         for file in files:
             image_name = file.replace('.jpg', '')
-            image_path = os.path.join(dirs, file)
+            image_path = os.path.join(subdir, file)
             print image_name
             print image_path
             exit(1)
