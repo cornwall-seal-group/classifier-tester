@@ -30,7 +30,7 @@ def allowed_file(filename):
 
 def test_images_against_classifier():
     print 'test_images_against_classifier'
-    seals = []
+    seals = {}
     for subdir, dirs, files in os.walk(TEST_IMAGE_FOLDER):
 
         if subdir not in seals:
