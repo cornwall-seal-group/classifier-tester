@@ -13,6 +13,6 @@ def find_seal(image_path):
     # Open the image and get back the prediction results.
     with open(image_path, mode="rb") as image_contents:
         results = predictor.classify_image(
-            project_id, iteration_name, image_contents)
+            project_id, iteration_name, image_contents.read())
 
     return results.predictions
