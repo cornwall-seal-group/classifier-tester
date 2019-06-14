@@ -68,7 +68,7 @@ def save_seals_to_csv(seals):
     file_path = TEST_IMAGE_FOLDER + '/' + seal_name_file
     with open(file_path, 'w') as csv_file:
         for key in seals.keys():
-            csv_file.write("%s,%s\n" % (key, ''.join(seals[key])))
+            csv_file.write("%s,%s\n" % (key, ','.join(seals[key])))
 
 
 if __name__ == '__main__':
