@@ -34,12 +34,12 @@ def test_images_against_classifier():
     for subdir, dirs, files in os.walk(TEST_IMAGE_FOLDER):
 
         if subdir not in seals:
-            seals[subsdir] = []
+            seals[subdir] = []
 
         for file in files:
             if allowed_file(file):
 
-                seals[subsdir].append(file)
+                seals[subdir].append(file)
 
                 image_name = file.replace('.jpg', '')
                 image_path = os.path.join(subdir, file)
