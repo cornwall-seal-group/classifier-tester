@@ -28,15 +28,12 @@ def test_images_against_classifier():
         for file in files:
             image_name = file.replace('.jpg', '')
             image_path = os.path.join(subdir, file)
-            print image_name
-            print file
-            print image_path
-            exit(1)
 
             predictions = find_seal(image_path)
             print predictions
 
             save_json_file(subdir, image_name, predictions)
+            exit(1)
 
 
 def save_json_file(path, image, predictions):
