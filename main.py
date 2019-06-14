@@ -41,7 +41,7 @@ def save_json_file(path, image, predictions):
         'data': predictions
     }
     with open(path + image + '.json', 'w') as fp:
-        json.dump(json_data, fp)
+        json.dump(json_data.__dict__, fp)
 
 
 if __name__ == '__main__':
