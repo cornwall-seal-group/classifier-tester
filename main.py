@@ -1,4 +1,5 @@
 import os
+import csv
 import json
 import config
 from api.classifier import find_seal
@@ -29,10 +30,17 @@ def allowed_file(filename):
 
 def test_images_against_classifier():
     print 'test_images_against_classifier'
+    seals = []
     for subdir, dirs, files in os.walk(TEST_IMAGE_FOLDER):
+
+        if subdir not in seals:
+            seals[subsdir] = []
 
         for file in files:
             if allowed_file(file):
+
+                seals[subsdir].append(file)
+
                 image_name = file.replace('.jpg', '')
                 image_path = os.path.join(subdir, file)
 
@@ -44,14 +52,23 @@ def test_images_against_classifier():
                     print ("\t" + prediction.tag_name +
                            ": {0:.2f}%".format(prediction.probability * 100))
 
-                print json_predictions
                 save_json_file(subdir, image_name, json_predictions)
+
+        save_seals_to_csv(seals)
 
 
 def save_json_file(path, image, predictions):
     json_path = os.path.join(path, image) + '.json'
     with open(json_path, 'w') as fp:
         json.dump(predictions, fp)
+
+
+def save_seals_to_csv(seals):
+    seal_name_file = 'seals.csv'
+    file_path = TEST_IMAGE_FOLDER + '/' + seal_name_file
+    with open(file_path, 'w') as csv_file:
+        for key in seals.keys():
+            csv_file.write("%s,%s\n" % (key, ''.join(seals[key]))
 
 
 if __name__ == '__main__':
