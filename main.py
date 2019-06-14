@@ -29,7 +29,7 @@ def test_images_against_classifier():
             image_name = file.replace('.jpg', '')
             image_path = os.path.join(dirs, file)
             print image_name
-            print dirs
+            print image_path
             exit(1)
 
             predictions = find_seal(image_path)
