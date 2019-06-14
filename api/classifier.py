@@ -15,4 +15,4 @@ def find_seal(image_path):
         results = predictor.classify_image(
             project_id, iteration_name, image_contents.read())
 
-    return results.predictions
+    return results
