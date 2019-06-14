@@ -29,19 +29,23 @@ def test_images_against_classifier():
             image_name = file.replace('.jpg', '')
             image_path = os.path.join(subdir, file)
 
-            predictions = find_seal(image_path)
-            print predictions
+            results = find_seal(image_path)
+            json_predictions = {}
 
-            save_json_file(subdir, image_name, predictions)
+            for prediction in results.predictions:
+                json_predictions[prediction.tag_name] = prediction.probability
+                print ("\t" + prediction.tag_name +
+                       ": {0:.2f}%".format(prediction.probability * 100))
+
+            print json_predictions
+            save_json_file(subdir, image_name, json_predictions)
             exit(1)
 
 
 def save_json_file(path, image, predictions):
-    json_data = {
-        'data': predictions
-    }
+
     with open(path + image + '.json', 'w') as fp:
-        json.dump(json_data.__dict__, fp)
+        json.dump(predictions, fp)
 
 
 if __name__ == '__main__':
