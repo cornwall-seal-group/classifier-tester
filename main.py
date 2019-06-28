@@ -9,6 +9,9 @@ ITERATION = config.ITERATION
 TEST_IMAGE_FOLDER = '../classifier-test-images/' + ITERATION + '/'
 
 
+#
+# FOLDER STRUCTURE:
+#
 # classifier-test-images/
 #    {iteration}/
 #              LF1/
@@ -21,6 +24,14 @@ TEST_IMAGE_FOLDER = '../classifier-test-images/' + ITERATION + '/'
 # Get the iteration ID to know which folders to look through
 # Loop through the seal folders and each image in it
 # Submit each image to the classifier and store the result in a JSON file with the same image name
+# Save JSON of results as:
+# {
+#     "LF1": {
+#         "image_name.jpg": {
+#             "predictions": {}
+#         }
+#     }
+# }
 
 
 def allowed_file(filename):
@@ -34,14 +45,13 @@ def test_images_against_classifier():
     for subdir, dirs, files in os.walk(TEST_IMAGE_FOLDER):
 
         if subdir not in seals:
-            seals[subdir] = []
+            seals[subdir] = {}
 
         for file in files:
             if allowed_file(file):
 
-                seals[subdir].append(file)
+                seals[subdir][file] = {}
 
-                image_name = file.replace('.jpg', '')
                 image_path = os.path.join(subdir, file)
 
                 results = find_seal(image_path)
@@ -52,23 +62,16 @@ def test_images_against_classifier():
                     print ("\t" + prediction.tag_name +
                            ": {0:.2f}%".format(prediction.probability * 100))
 
-                save_json_file(subdir, image_name, json_predictions)
+                seals[subdir][file] = json_predictions
 
-        save_seals_to_csv(seals)
-
-
-def save_json_file(path, image, predictions):
-    json_path = os.path.join(path, image) + '.json'
-    with open(json_path, 'w') as fp:
-        json.dump(predictions, fp)
+        save_seals_to_json(seals)
 
 
-def save_seals_to_csv(seals):
-    seal_name_file = 'seals.csv'
+def save_seals_to_json(seals):
+    seal_name_file = 'seals.json'
     file_path = TEST_IMAGE_FOLDER + '/' + seal_name_file
-    with open(file_path, 'w') as csv_file:
-        for key in seals.keys():
-            csv_file.write("%s,%s\n" % (key, ','.join(seals[key])))
+    with open(file_path, 'w') as json_file:
+        json.dump(seals, json_file)
 
 
 if __name__ == '__main__':
